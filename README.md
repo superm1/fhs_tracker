@@ -16,7 +16,7 @@ When a new result is found it's sent to my MQTT broker.
 A sensor needs to be added to Home Assistant to monitor this MQTT topic. I have the script running once per hour, so I want to make sure that in case it stops running I don't have a false negative (or positive!).  That means this gets set to "Unavailable" when it expires and hasn't gotten an update.
 
 ```
-sensor:
+binary_sensor:
   - platform: mqtt
     name: "FHS Medical slots tracker"
     state_topic: "fhs_tracker/spot_available"
@@ -31,8 +31,8 @@ The automation just looks for the binary sensor change and notifies me.
   description: ''
   trigger:
   - platform: state
-    entity_id: sensor.fhs_medical_slots_tracker
-    to: 'True'
+    entity_id: binary_sensor.fhs_medical_slots_tracker
+    to: 'on'
   condition: []
   action:
   - service: notify.mobile_app_pixel_3xl

@@ -26,7 +26,13 @@ def get_page_alert(driver):
     driver.switch_to.frame(element)
     time.sleep(10)  # wait 10 seconds for page to finish the load
     alert = driver.find_element_by_class_name("alert")
-    spots_available = not alert.is_displayed()
+    spots_available=False
+    if alert.is_displayed():
+        if not 'No services were set up' in alert.text:
+            spots_available=True
+            print(alert.text)
+    else: #no alert
+        spots_available=True
     return spots_available
 
 

@@ -2,6 +2,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import NoSuchElementException
 from secrets import uri
 import paho.mqtt.client as mqttClient
 import time
@@ -23,9 +24,13 @@ def get_page_alert(driver):
     element = driver.find_element_by_tag_name("iframe")
     driver.switch_to.frame(element)
     time.sleep(10)  # wait 10 seconds for page to finish the load
-    alert = driver.find_element_by_class_name("alert")
     spots_available=False
-    if alert.is_displayed():
+    alert = None
+    try:
+        alert = driver.find_element_by_class_name("alert")
+    except NoSuchElementException:
+        print("No alert found")
+    if alert and alert.is_displayed():
         if not 'No services were set up' in alert.text:
             spots_available=True
             print(alert.text)

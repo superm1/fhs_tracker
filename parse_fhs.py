@@ -24,7 +24,7 @@ def get_page_alert(driver):
     element = driver.find_element_by_tag_name("iframe")
     driver.switch_to.frame(element)
     time.sleep(10)  # wait 10 seconds for page to finish the load
-    spots_available=False
+    spots_available=True
     alert = None
     try:
         alert = driver.find_element_by_class_name("alert")
@@ -35,10 +35,7 @@ def get_page_alert(driver):
            'No services in this location' in alert.text:
             spots_available=False
         else:
-            spots_available=True
             print(alert.text)
-    else: #no alert
-        spots_available=True
     return spots_available
 
 

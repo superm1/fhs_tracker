@@ -32,7 +32,7 @@ def get_page_alert(driver):
         print("No alert found")
     if alert and alert.is_displayed():
         if 'No services were set up' in alert.text or\
-           'No services in this location' in alert:
+           'No services in this location' in alert.text:
             spots_available=False
         else:
             spots_available=True

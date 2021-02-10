@@ -31,7 +31,10 @@ def get_page_alert(driver):
     except NoSuchElementException:
         print("No alert found")
     if alert and alert.is_displayed():
-        if not 'No services were set up' in alert.text:
+        if 'No services were set up' in alert.text or\
+           'No services in this location' in alert:
+            spots_available=False
+        else:
             spots_available=True
             print(alert.text)
     else: #no alert

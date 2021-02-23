@@ -28,14 +28,28 @@ def get_page_alert(driver):
     alert = None
     try:
         alert = driver.find_element_by_class_name("alert")
+        if alert and alert.is_displayed():
+            if 'No services were set up' in alert.text or\
+            'No services in this location' in alert.text:
+                return False
+            else:
+                print(alert.text)
     except NoSuchElementException:
         print("No alert found")
-    if alert and alert.is_displayed():
-        if 'No services were set up' in alert.text or\
-           'No services in this location' in alert.text:
-            spots_available=False
+
+    #alert isn't displayed, but we have a graph
+    element = None
+    try:
+        column=driver.find_element_by_class_name("column2")
+        message=column.find_element_by_class_name('ng-binding')
+        if 'No spots available' in message.text:
+            return False
         else:
-            print(alert.text)
+            print(message.text)
+    except NoSuchElementException:
+        print("Missing column2 element")
+        spots_available=False
+
     return spots_available
 
 

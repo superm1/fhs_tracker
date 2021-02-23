@@ -48,5 +48,5 @@ while True:
     value = get_page_alert(driver)
     send_mqtt(value)
     print("Sent %d at %s" % (value, datetime.datetime.now()))
-    time.sleep(58 * 60)  # 58 minutes
+    time.sleep(5 * 60)  # 58 minutes
     driver.refresh()

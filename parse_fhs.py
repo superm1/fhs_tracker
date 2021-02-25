@@ -21,8 +21,12 @@ def send_mqtt(value):
 
 
 def get_page_alert(driver):
-    element = driver.find_element_by_tag_name("iframe")
-    driver.switch_to.frame(element)
+    try:
+        element = driver.find_element_by_tag_name("iframe")
+        driver.switch_to.frame(element)
+    except NoSuchElementException:
+        print("No alert found")
+        return False
     time.sleep(10)  # wait 10 seconds for page to finish the load
     spots_available=True
     alert = None
